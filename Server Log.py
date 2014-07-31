@@ -1,8 +1,6 @@
 import datetime
 import re
 
-#Test comment. To be removed later
-
 class Server:
     """
     One object of class Server searches the necessary file and determines the number
