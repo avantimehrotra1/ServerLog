@@ -1,6 +1,7 @@
 import datetime
 import re
 
+#Test comment. To be removed later
 
 class Server:
     """
@@ -15,9 +16,9 @@ class Server:
 
     def searchFile(self, logFile):
         """
-        Searches file and sets variables to calculate. 
+        Searches file and sets variables to calculate.
         """
-               
+
         #searches each line in logFile
         for self.line in logFile:
 
@@ -26,10 +27,10 @@ class Server:
                 self.timeVariable += 1
 
                 #searching for datetimes, (MM/DD/YYYY HH/MM/SS AM (or PM)
-                match = re.search(r'(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s[A-Z]+)', self.line) 
+                match = re.search(r'(\d{2}/\d{2}/\d{4}\s\d{2}:\d{2}:\d{2}\s[A-Z]+)', self.line)
 
                 #extracting date from string
-                dateAndTime = match.group(0)            
+                dateAndTime = match.group(0)
 
                 #formats datetime to string
                 formattedDateAndTime = datetime.datetime.strptime(dateAndTime,'%m/%d/%Y %H:%M:%S %p')
@@ -52,18 +53,18 @@ class Server:
                 if self.timeVariable == 1:
                     self.firstTime = formattedDateAndTime
 
-            #increments variable for DB Queries                      
+            #increments variable for DB Queries
             if 'DB Query' in self.line:
                 self.numberOfQueries += 1
-        
+
         print ('First Time:', self.firstTime)
         print ('Last Time:', self.lastTime)
         print ('\ntimeVariable:', self.timeVariable)
         print ('numberOfQueries:', self.numberOfQueries)
         print ('Array of Times:', self.arrayOfTimes)
-        
+
         return (self.firstTime, self.lastTime, self.numberOfQueries)
-        
+
     def calculateQueriesPerHour(self):
         """
         Calculates the number of queries per hour based on
@@ -79,11 +80,11 @@ class Server:
 
         #converts queries/sec to queries/hour
         self.queriesPerHour = self.queriesPerSecond*3600
-        
+
         print ('Total Queries per Hour:', self.queriesPerHour, 'queries/hour \n')
 
         return self.queriesPerHour
-    
+
     def queriesInEachHour(self):
         """
         Prints out each element of the array.
@@ -104,7 +105,7 @@ class Server:
         offsetList = ['12 am', '1 am', '2 am', '3 am', '4 am', '5 am', '6 am', '7 am', '8 am', '9 am',
                       '10 am', '11 am', '12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm',
                       '8 pm', '9 pm', '10 pm', '11 pm', '12 pm']
-        
+
         firstTimeHour = self.firstTime.time().hour
         print ('First Time Hour:', firstTimeHour)
 
@@ -113,12 +114,12 @@ class Server:
         print(m2)
 
 #_var_log_httpd_error_log-1405049101.txt
-        
+
 if __name__ == "__main__":
     userInput = input("Enter file's name:\n") #takes in user's input
-    #opens file that user inputed 
+    #opens file that user inputed
     stringFile = open(userInput, 'r')
-    
+
     server1 = Server()
     server1.searchFile(stringFile)
     stringFile.close()
